@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motivational Message App</title>
+    <style>
+        * {
+            font-size: 2vw;
+            font-family: Calibri;
+        }
+        body {
+            background-color: white;
+            background-image: url("p2.PNG");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            text-align: center;
+            margin: 20px;
+        }
+        h2 {
+            border: solid;
+            border-radius: 30px;
+            width: 30%;
+            margin: 10px auto;
+        }
+        form {
+            border: groove;
+            border-radius: 30px;
+            width: 30%;
+            padding: 40px;
+            margin: 20px auto;
+        }
+        .quote-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="gm(event)">
+        <button type="submit">Get Motivational Msg</button>
+    </form>
+
+    <div class="quote-container">
+        <h2 id="msg">Your motivational quote will appear here.</h2>
+        <h2 id="aut">Author name will appear here.</h2>
+    </div>
+
+    <script>
+        function gm(event) {
+            event.preventDefault(); // Prevent form submission and page reload
+            let aut = document.getElementById("aut");
+            let msg = document.getElementById("msg");
+
+            let url = "https://quotes-api-self.vercel.app/quote";
+            fetch(url)
+                .then(res => res.json())    
+                .then(data => {
+                    msg.innerHTML = data.quote;
+                    aut.innerHTML = data.author;
+                })
+                .catch(err => {
+                    msg.innerHTML = "Sorry, we couldn't fetch a quote at the moment.";
+                    aut.innerHTML = "Please try again later.";
+                    console.error("Error fetching quote:", err);
+                });
+        }
+    </script>
+</body>
+</html>
